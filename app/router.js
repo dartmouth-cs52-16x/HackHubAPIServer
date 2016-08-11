@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as Posts from './controllers/post_controller';
+import * as Announcement from './controllers/announcement_controller';
 
 
 const router = Router();
@@ -9,13 +9,9 @@ router.get('/', (req, res) => {
 });
 
 // /your routes will go here
-router.route('/posts')
-  .post(Posts.createPost)
-  .get(Posts.getPosts);
-
-router.route('/posts/:id')
-  .get(Posts.getPost)
-  .put(Posts.updatePost)
-  .delete(Posts.deletePost);
+router.route('/announcement')
+  .post(Announcement.createAnn)
+  .get(Announcement.getAnns)
+  .delete(Announcement.deleteAnn);
 
 export default router;
