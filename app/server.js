@@ -14,6 +14,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// default api route
+app.use('/api', apiRouter);
 
 // default index route
 app.get('/', (req, res) => {
@@ -32,5 +34,3 @@ const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost/blog';
 mongoose.connect(mongoURI);
 // set mongoose promises to es6 default
 mongoose.Promise = global.Promise;
-
-app.use('/api', apiRouter);
