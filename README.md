@@ -24,11 +24,37 @@ HackHub is a platform for organizing communication at a hackathon event. Hackers
 
 ## Architecture
 
-TODO:  descriptions of code organization and tools and libraries used
+### Front End
+
+For our front end, we decided to use react+redux to organize our code. We broke down the list of different hackathon events into components, and also the various tabs for each user's specific event needs into components. 
+
+Actions and reducers are used to work with data from the server api for different components' uses; for example, currently we have the announcements section working and can post and receive announcements. 
+
+We have routing for the different pages organized in src/routes.js, and we use the axios library to give us a promise-based interface to make API requests. We also use the thunk library to allow our ActionCreators to return functions themselves instead of just actions with dispatch.
+
+### Back End
+
+For the back end, we decided to use an express and mongodb CRUD api server to connect to the front end. We use express routes and schema to implement the api for the front end components. To connect to mongo, we had to use a module called mongoose to treat data that we store in mongo as objects.
+
+Currently, this is only implemented for our announcements posts.
 
 ## Setup
 
-TODO: how to get the project dev environment up and running, npm install etc
+To set up the project development environment, you will need to fork or clone the two repositories needed for this project: HackHubFrontEnd and HackHubAPIServer. Within both, you will need to do the following locally:
+
+In order to test the project, you will need to install the modules and libraries we have used here in the command line.
+
+`npm install`
+
+For local testing specifically, you will need to in HackHubFrontEnd run:
+
+`npm start`
+
+And in a different command line window, in HackHubAPIServer run:
+
+`npm run dev`
+
+Then follow the steps below in a third command line window to deploy and test the initial product.
 
 ## Deployment
 
