@@ -35,9 +35,10 @@ export const getCompanies = (req, res) => {
 };
 
 export const deleteComp = (req, res) => {
+  res.json({ message: `Company successfully deleted: id: ${req.params.id}` });
   Company.findById(req.params.id).remove()
   .then(result => {
-    res.json({ message: 'Company successfully deleted' });
+    res.json({ message: `Company successfully deleted: id: ${req.params.id}` });
   })
   .catch(error => {
     res.json({ error });

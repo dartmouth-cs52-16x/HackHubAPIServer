@@ -15,9 +15,14 @@ router.route('/announcement')
   .get(Announcement.getAnns)
   .delete(Announcement.deleteAnn);
 
+router.route('/announcement/:id')
+  .delete(Announcement.deleteAnn);
+
 router.route('/company')
   .post(Company.createComp)
-  .get(Company.getCompanies)
+  .get(Company.getCompanies);
+
+router.route('/company/:id')
   .delete(Company.deleteComp);
 
 export default router;
