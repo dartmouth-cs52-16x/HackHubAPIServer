@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as Announcement from './controllers/announcement_controller';
+import * as Company from './controllers/company-controller';
 
 
 const router = Router();
@@ -13,5 +14,10 @@ router.route('/announcement')
   .post(Announcement.createAnn)
   .get(Announcement.getAnns)
   .delete(Announcement.deleteAnn);
+
+router.route('/company')
+  .post(Company.createComp)
+  .get(Company.getCompanies)
+  .delete(Company.deleteComp);
 
 export default router;
