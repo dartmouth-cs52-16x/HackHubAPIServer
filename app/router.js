@@ -10,12 +10,12 @@ router.get('/', (req, res) => {
 });
 
 // /your routes will go here
-router.route('/announcement')
+router.route('/announcements')
   .post(Announcement.createAnn)
   .get(Announcement.getAnns)
   .delete(Announcement.deleteAnn);
 
-router.route('/announcement/:id')
+router.route('/announcements/:id')
   .delete(Announcement.deleteAnn);
 
 router.route('/company')
