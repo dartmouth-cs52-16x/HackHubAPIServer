@@ -26,9 +26,9 @@ HackHub is a platform for organizing communication at a hackathon event. Hackers
 
 ### Front End
 
-For our front end, we decided to use react+redux to organize our code. We broke down the list of different hackathon events into components, and also the various tabs for each user's specific event needs into components. 
+For our front end, we decided to use react+redux to organize our code. We broke down the list of different hackathon events into components, and also the various tabs for each user's specific event needs into components.
 
-Actions and reducers are used to work with data from the server api for different components' uses; for example, currently we have the announcements section working and can post and receive announcements. 
+Actions and reducers are used to work with data from the server api for different components' uses; for example, currently we have the announcements section working and can post and receive announcements.
 
 We have routing for the different pages organized in src/routes.js, and we use the axios library to give us a promise-based interface to make API requests. We also use the thunk library to allow our ActionCreators to return functions themselves instead of just actions with dispatch.
 
@@ -50,7 +50,7 @@ For local testing specifically, you will need to in HackHubFrontEnd run:
 
 `npm start`
 
-And in a different command line window, in HackHubAPIServer run:
+And in a different command line window, in HackHubAPIServer run (after setting up mongod):
 
 `npm run dev`
 
@@ -58,9 +58,11 @@ Then follow the steps below in a third command line window to deploy and test th
 
 ## Deployment
 
-How to Deploy the Project:
+Currently, the server is set up to deploy automatically on Heroku when the master branch of HackHubAPIServer is updated. Additionally, the frontend is deployed automatically on surge when the master branch of HackHubFrontEnd is updated. Since all deployment is automatic, to test the project after pushing to Github, visit the following link hackhub.surge.sh
 
-Currently, the project is set up to run on a local server. So, first set up the server with mongod. For instance, create any directory to store data and then run
+On the other hand, if you would like to test locally, follow these steps:
+
+To use mongod, create any directory to store data and then run
 
 `mongod --dbpath <path to data directory>`
 
@@ -77,6 +79,9 @@ To test the project, run
 and go to localhost:8080.
 
 ## Authors
+
 Erin Connolly, Emma Oberstein, Sophia Jiang, Robert Sayegh, Jean Zhou
 
 ## Acknowledgments
+
+Thanks to Tim for helping us through this project!
