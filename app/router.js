@@ -1,12 +1,16 @@
 import { Router } from 'express';
 import * as Announcement from './controllers/announcement_controller';
 import * as Company from './controllers/company-controller';
-
+import * as Users from './controllers/user_controller';
+import { requireSignin } from './services/passport';
 
 const router = Router();
 
+router.post('/signin', requireSignin, Users.signin);
+router.post('/signup', Users.signup);
+
 router.get('/', (req, res) => {
-  res.json({ message: 'welcome to our blog api!' });
+  res.json({ message: 'welcome to our hackhub api!' });
 });
 
 // /your routes will go here
