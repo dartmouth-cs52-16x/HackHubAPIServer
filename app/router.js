@@ -29,4 +29,7 @@ router.route('/company')
 router.route('/company/:id')
   .delete(Company.deleteComp);
 
+router.route('/users/:id')
+      .get(Users.getProfile);
+
 export default router;
