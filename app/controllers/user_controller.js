@@ -1,6 +1,7 @@
-import User from '../models/user_model';
 import jwt from 'jwt-simple';
 import config from '../config';
+import UserModel from '../models/user_model';
+
 
 // encodes a new token for a user object
 function tokenForUser(user) {
@@ -8,64 +9,47 @@ function tokenForUser(user) {
   return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
 }
 
+
 export const signin = (req, res, next) => {
-  User.findOne({ _id: req.user._id })
-  .then(result => {
-    res.send({ token: tokenForUser(req.user), id: req.user._id });
-  })
-  .catch(error => {
-    res.json({ message: 'Error in looking up user id' });
-  });
+  res.send({ token: tokenForUser(req.user) });
 };
 
 export const signup = (req, res, next) => {
   const email = req.body.email;
+  const username = req.body.username;
   const password = req.body.password;
 
   if (!email || !password) {
     return res.status(422).send('You must provide email and password');
   }
 
-  // here you should do a mongo query to find if a user already exists with this email.
-  User.findOne({ email })
-  .then(result => {
-    if (result !== null) {
-      // if user exists then return an error.
-      return res.status(422).send('A user with this email already exists');
-    } else {
-      // if not, use the User model to create a new user.
-      const user = new User();
-      user.email = email;
-      user.password = password;
-
-      // Save the new User object
-      // this is similar to how you created a Post
-      user.save()
-      .then(
-        // return a token
-        res.json({ token: tokenForUser(user), id: user._id })
-      )
-      .catch(error => {
-        res.json({ message: 'Error in save' });
+  UserModel.findOne({ email })
+      .then((user) => {
+        if (user) {
+          return res.status(422).send('User already exists');
+        } else {
+          const User = new UserModel();
+          User.email = email;
+          User.password = password;
+          User.username = username;
+          console.log(username);
+          User.save()
+          .then(
+            // return a token
+            res.send({ token: tokenForUser(user) })
+          );
+        }
       });
-    }
-  })
-  .catch(error => {
-    res.json({ message: 'Error in findOne' });
-  });
 };
 
 export const getProfile = (req, res) => {
   console.log('getting here');
-  User.findById(req.params.id)
-  .then(result => {
+  UserModel.findById(req.params.id).then(result => {
     if (result !== null) {
-      res.json({ id: req.params.id });
+      res.json({ user: result });
     } else {
       res.json({ message: 'Error in findOne' });
-    }
-  })
-  .catch(error => {
-    res.json({ message: 'Error in findOne' });
-  });
+    } }).catch(error => {
+      res.json({ message: 'Error in findOne' });
+    });
 };
