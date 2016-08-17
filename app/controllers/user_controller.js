@@ -48,3 +48,19 @@ export const signup = (req, res, next) => {
     res.json({ message: 'Error in findOne' });
   });
 };
+
+const cleanUser = (input) => {
+  return { id: input._id, email: input.email, fullname: input.fullname,
+    website: input.website, linkedin: input.linkedin, about: input.about,
+    skills: input.skills };
+};
+
+export const getUser = (req, res) => {
+  User.findById(req.params.id)
+    .then(user => {
+      res.json(cleanUser(user));
+    })
+    .catch(error => {
+      res.json({ error });
+    });
+};

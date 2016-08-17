@@ -5,6 +5,11 @@ import bcrypt from 'bcrypt-nodejs';
 const UserSchema = new Schema({
   email: { type: String, unique: true, lowercase: true },
   password: String,
+  fullname: String,
+  website: String,
+  linkedin: String,
+  about: String,
+  skills: String,
 });
 
 UserSchema.set('toJSON', {
@@ -40,6 +45,12 @@ UserSchema.methods.comparePassword = function comparePassword(candidatePassword,
 
     callback(null, isMatch);
   });
+};
+
+const cleanUser = (input) => {
+  return { id: input._id, email: input.email, fullname: input.fullname,
+    website: input.website, linkedin: input.linkedin, about: input.about,
+    skills: input.skills };
 };
 
 // create model class
