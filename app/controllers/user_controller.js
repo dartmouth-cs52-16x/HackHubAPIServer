@@ -9,7 +9,13 @@ function tokenForUser(user) {
 }
 
 export const signin = (req, res, next) => {
-  res.send({ token: tokenForUser(req.user) });
+  User.findOne({ _id: req.user._id })
+  .then(result => {
+    res.send({ token: tokenForUser(req.user), id: req.user._id });
+  })
+  .catch(error => {
+    res.json({ message: 'Error in looking up user id' });
+  });
 };
 
 export const signup = (req, res, next) => {
@@ -31,17 +37,33 @@ export const signup = (req, res, next) => {
       const user = new User();
       user.email = email;
       user.password = password;
+      console.log('hi');
 
       // Save the new User object
       // this is similar to how you created a Post
       user.save()
       .then(
         // return a token
-        res.json({ token: tokenForUser(user) })
+        res.json({ token: tokenForUser(user), id: user._id })
       )
       .catch(error => {
         res.json({ message: 'Error in save' });
       });
+    }
+  })
+  .catch(error => {
+    res.json({ message: 'Error in findOne' });
+  });
+};
+
+export const getProfile = (req, res) => {
+  console.log('getting here');
+  User.findOne({ _id: req.params.id })
+  .then(result => {
+    if (result !== null) {
+      res.json({ id: req.params.id });
+    } else {
+      res.json({ message: 'Error in findOne' });
     }
   })
   .catch(error => {
