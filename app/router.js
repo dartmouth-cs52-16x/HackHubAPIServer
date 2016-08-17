@@ -2,7 +2,7 @@ import { Router } from 'express';
 import * as Announcement from './controllers/announcement_controller';
 import * as Company from './controllers/company-controller';
 import * as Users from './controllers/user_controller';
-import { requireSignin } from './services/passport';
+import { requireAuth, requireSignin } from './services/passport';
 
 const router = Router();
 
@@ -14,6 +14,9 @@ router.get('/', (req, res) => {
 });
 
 // /your routes will go here
+router.route('/users/:id')
+  .get(requireAuth, Users.getProfile);
+
 router.route('/announcements')
   .post(Announcement.createAnn)
   .get(Announcement.getAnns)
