@@ -37,7 +37,6 @@ export const signup = (req, res, next) => {
       const user = new User();
       user.email = email;
       user.password = password;
-      console.log('hi');
 
       // Save the new User object
       // this is similar to how you created a Post
@@ -58,7 +57,7 @@ export const signup = (req, res, next) => {
 
 export const getProfile = (req, res) => {
   console.log('getting here');
-  User.findOne({ _id: req.params.id })
+  User.findById(req.params.id)
   .then(result => {
     if (result !== null) {
       res.json({ id: req.params.id });
