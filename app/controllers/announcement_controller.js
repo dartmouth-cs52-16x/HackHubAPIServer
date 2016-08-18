@@ -25,7 +25,7 @@ export const createAnn = (req, res) => {
 };
 
 export const getAnns = (req, res) => {
-  Announcement.find()
+  Announcement.find().sort({ createdAt: -1 })
   .then(results => {
     res.json(cleanIDs(results));
   })

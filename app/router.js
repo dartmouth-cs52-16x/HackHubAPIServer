@@ -30,4 +30,7 @@ router.route('/company/:id')
   .get(Company.getCompany)
   .delete(Company.deleteComp);
 
+router.route('/users/:id')
+      .get(Users.getProfile);
+
 export default router;
