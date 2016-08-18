@@ -4,7 +4,7 @@ import UserModel from '../models/user_model';
 
 
 const cleanID = (input) => {
-  return { id: input._id, email: input.email, organizer: input.organizer };
+  return { id: input._id, email: input.email, organizer: input.organizer, fullname: input.fullname };
 };
 
 const cleanIDs = (inputs) => {
@@ -26,6 +26,7 @@ export const signin = (req, res, next) => {
 
 export const signup = (req, res, next) => {
   const email = req.body.email;
+  const name = req.body.fullname;
   const password = req.body.password;
 
   if (!email || !password) {
@@ -38,6 +39,7 @@ export const signup = (req, res, next) => {
           return res.status(422).send('User already exists');
         } else {
           const User = new UserModel();
+          User.fullname = name;
           User.email = email;
           User.password = password;
           User.organizer = 0;
