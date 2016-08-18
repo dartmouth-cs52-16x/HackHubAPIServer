@@ -16,7 +16,6 @@ export const signin = (req, res, next) => {
 
 export const signup = (req, res, next) => {
   const email = req.body.email;
-  const username = req.body.username;
   const password = req.body.password;
 
   if (!email || !password) {
@@ -31,8 +30,7 @@ export const signup = (req, res, next) => {
           const User = new UserModel();
           User.email = email;
           User.password = password;
-          User.username = username;
-          console.log(username);
+          User.organizer = 0;
           User.save()
           .then(
             // return a token
