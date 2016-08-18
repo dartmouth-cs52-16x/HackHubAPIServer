@@ -3,7 +3,7 @@ import Company from '../models/company_model';
 
 const cleanID = (input) => {
   return { id: input._id, name: input.name, image: input.image,
-    website: input.website, recruiter: input.recruiter };
+    website: input.website, recruiter: input.recruiter, jobs: input.jobs };
 };
 
 const cleanIDs = (inputs) => {
@@ -18,6 +18,7 @@ export const createComp = (req, res) => {
   company.image = req.body.image;
   company.website = req.body.website;
   company.recruiter = req.body.recruiter;
+  company.jobs = [];
   company.save()
   .then(result => {
     res.json({ message: 'Company created!' });
@@ -52,6 +53,23 @@ export const deleteComp = (req, res) => {
   Company.findById(req.params.id).remove()
   .then(result => {
     res.json({ message: `Company successfully deleted: id: ${req.params.id}` });
+  })
+  .catch(error => {
+    res.json({ error });
+  });
+};
+
+export const updateComp = (req, res) => {
+  Company.findById(req.params.id)
+  .then(result => {
+    const updatedComp = result;
+    updatedComp.name = req.body.name;
+    updatedComp.image = req.body.image;
+    updatedComp.website = req.body.website;
+    updatedComp.recruiter = req.body.recruiter;
+    updatedComp.jobs = req.body.jobs;
+    updatedComp.save();
+    res.json(cleanID(updatedComp));
   })
   .catch(error => {
     res.json({ error });
