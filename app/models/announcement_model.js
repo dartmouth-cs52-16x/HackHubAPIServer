@@ -4,6 +4,8 @@ import mongoose, { Schema } from 'mongoose';
 const AnnouncementSchema = new Schema({
   text: String,
   date: String,
+}, {
+  timestamps: true,
 });
 
 // create model class
