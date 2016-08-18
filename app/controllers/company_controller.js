@@ -2,7 +2,8 @@ import Company from '../models/company_model';
 
 
 const cleanID = (input) => {
-  return { id: input._id, text: input.text, date: input.date };
+  return { id: input._id, name: input.name, image: input.image,
+    website: input.website, recruiter: input.recruiter };
 };
 
 const cleanIDs = (inputs) => {
@@ -13,8 +14,10 @@ const cleanIDs = (inputs) => {
 
 export const createComp = (req, res) => {
   const company = new Company();
-  company.text = req.body.text;
-  company.date = req.body.date;
+  company.name = req.body.name;
+  company.image = req.body.image;
+  company.website = req.body.website;
+  company.recruiter = req.body.recruiter;
   company.save()
   .then(result => {
     res.json({ message: 'Company created!' });
@@ -31,6 +34,16 @@ export const getCompanies = (req, res) => {
   })
   .catch(error => {
     res.json({ error });
+  });
+};
+
+export const getCompany = (req, res) => {
+  Company.findById(req.params.id)
+  .then(result => {
+    res.json(cleanID(result));
+  })
+  .catch(error => {
+    res.json('error');
   });
 };
 
