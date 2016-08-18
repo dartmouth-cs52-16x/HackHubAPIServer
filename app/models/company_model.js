@@ -2,8 +2,11 @@ import mongoose, { Schema } from 'mongoose';
 
 // create a schema for posts with a field
 const CompanySchema = new Schema({
-  text: String,
-  date: String,
+  name: String,
+  image: String,
+  website: String,
+  recruiter: String,
+  jobs: Array,
 });
 
 // create model class
