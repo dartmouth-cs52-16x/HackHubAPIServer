@@ -28,7 +28,8 @@ router.route('/company')
 
 router.route('/company/:id')
   .get(Company.getCompany)
-  .delete(Company.deleteComp);
+  .delete(Company.deleteComp)
+  .put(Company.updateComp);
 
 router.route('/users/:id')
       .get(Users.getProfile);
