@@ -32,6 +32,11 @@ router.route('/company/:id')
   .put(Company.updateComp);
 
 router.route('/users/:id')
-      .get(Users.getProfile);
+      .get(Users.getProfile)
+      .delete(Users.deleteUser);
+
+router.route('/users')
+  .get(Users.getUsers);
+
 
 export default router;
