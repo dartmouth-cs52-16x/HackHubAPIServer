@@ -3,6 +3,16 @@ import config from '../config';
 import UserModel from '../models/user_model';
 
 
+const cleanID = (input) => {
+  return { id: input._id, email: input.email, organizer: input.organizer };
+};
+
+const cleanIDs = (inputs) => {
+  return inputs.map(input => {
+    return cleanID(input);
+  });
+};
+
 // encodes a new token for a user object
 function tokenForUser(user) {
   const timestamp = new Date().getTime();
@@ -16,7 +26,6 @@ export const signin = (req, res, next) => {
 
 export const signup = (req, res, next) => {
   const email = req.body.email;
-  const username = req.body.username;
   const password = req.body.password;
 
   if (!email || !password) {
@@ -31,8 +40,7 @@ export const signup = (req, res, next) => {
           const User = new UserModel();
           User.email = email;
           User.password = password;
-          User.username = username;
-          console.log(username);
+          User.organizer = 0;
           User.save()
           .then(
             // return a token
@@ -52,4 +60,25 @@ export const getProfile = (req, res) => {
     } }).catch(error => {
       res.json({ message: 'Error in findOne' });
     });
+};
+
+export const getUsers = (req, res) => {
+  UserModel.find()
+  .then(results => {
+    res.json(cleanIDs(results));
+  })
+  .catch(error => {
+    res.json({ error });
+  });
+};
+
+export const deleteUser = (req, res) => {
+  res.json({ message: `User successfully deleted: id: ${req.params.id}` });
+  UserModel.findById(req.params.id).remove()
+  .then(result => {
+    res.json({ message: `User successfully deleted: id: ${req.params.id}` });
+  })
+  .catch(error => {
+    res.json({ error });
+  });
 };
