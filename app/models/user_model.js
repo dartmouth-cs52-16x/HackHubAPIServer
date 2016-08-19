@@ -7,6 +7,12 @@ const UserSchema = new Schema({
   organizer: Number,
   password: String,
   fullname: String,
+  image: String,
+  facebook: String,
+  linkedin: String,
+  phone: Number,
+  about: String,
+  skills: Array,
 });
 
 UserSchema.set('toJSON', {
