@@ -10,6 +10,7 @@ const cleanID = (input) => {
     image: input.image,
     facebook: input.facebook,
     linkedin: input.linkedin,
+    website: input.website,
     phone: input.phone,
     about: input.about,
     skills: input.skills };
