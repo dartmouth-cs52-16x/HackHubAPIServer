@@ -33,7 +33,8 @@ router.route('/company/:id')
 
 router.route('/users/:id')
       .get(Users.getProfile)
-      .delete(Users.deleteUser);
+      .delete(Users.deleteUser)
+      .put(Users.updateUser);
 
 router.route('/users')
   .get(Users.getUsers);
