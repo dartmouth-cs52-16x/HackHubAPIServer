@@ -4,7 +4,15 @@ import UserModel from '../models/user_model';
 
 
 const cleanID = (input) => {
-  return { id: input._id, email: input.email, organizer: input.organizer, fullname: input.fullname };
+  return { id: input._id,
+    organizer: input.organizer,
+    fullname: input.fullname,
+    image: input.image,
+    facebook: input.facebook,
+    linkedin: input.linkedin,
+    phone: input.phone,
+    about: input.about,
+    skills: input.skills };
 };
 
 const cleanIDs = (inputs) => {
@@ -21,7 +29,7 @@ function tokenForUser(user) {
 
 
 export const signin = (req, res, next) => {
-  res.send({ token: tokenForUser(req.user) });
+  res.send({ token: tokenForUser(req.user), user: req.user._id });
 };
 
 export const signup = (req, res, next) => {
@@ -46,7 +54,7 @@ export const signup = (req, res, next) => {
           User.save()
           .then(
             // return a token
-            res.send({ token: tokenForUser(user) })
+            res.send({ token: tokenForUser(User), user: User._id })
           );
         }
       });
@@ -56,7 +64,8 @@ export const getProfile = (req, res) => {
   console.log('getting here');
   UserModel.findById(req.params.id).then(result => {
     if (result !== null) {
-      res.json({ user: result });
+      console.log(result);
+      res.json({ user: cleanID(result) });
     } else {
       res.json({ message: 'Error in findOne' });
     } }).catch(error => {
@@ -75,10 +84,28 @@ export const getUsers = (req, res) => {
 };
 
 export const deleteUser = (req, res) => {
-  res.json({ message: `User successfully deleted: id: ${req.params.id}` });
   UserModel.findById(req.params.id).remove()
   .then(result => {
     res.json({ message: `User successfully deleted: id: ${req.params.id}` });
+  })
+  .catch(error => {
+    res.json({ error });
+  });
+};
+
+export const updateUser = (req, res) => {
+  UserModel.findById(req.body.id)
+  .then(result => {
+    const update = result;
+    update.image = req.body.image;
+    update.website = req.body.website;
+    update.facebook = req.body.facebook;
+    update.linkedin = req.body.linkedin;
+    update.about = req.body.about;
+    update.phone = req.body.phone;
+    update.skills = req.body.skills;
+    update.save();
+    res.json(cleanID(update));
   })
   .catch(error => {
     res.json({ error });
