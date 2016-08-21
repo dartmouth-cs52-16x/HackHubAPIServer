@@ -3,7 +3,7 @@ import Company from '../models/company_model';
 
 const cleanID = (input) => {
   return { id: input._id, name: input.name, image: input.image,
-    website: input.website, recruiter: input.recruiter, jobs: input.jobs };
+    website: input.website, recruiter: input.recruiter, jobs: input.jobs, about: input.about };
 };
 
 const cleanIDs = (inputs) => {
@@ -19,6 +19,7 @@ export const createComp = (req, res) => {
   company.website = req.body.website;
   company.recruiter = req.body.recruiter;
   company.jobs = [];
+  company.about = '';
   company.save()
   .then(result => {
     res.json({ message: 'Company created!' });
@@ -68,6 +69,7 @@ export const updateComp = (req, res) => {
     updatedComp.website = req.body.website;
     updatedComp.recruiter = req.body.recruiter;
     updatedComp.jobs = req.body.jobs;
+    updatedComp.about = req.body.about;
     updatedComp.save();
     res.json(cleanID(updatedComp));
   })

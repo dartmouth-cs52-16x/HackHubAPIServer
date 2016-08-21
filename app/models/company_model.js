@@ -7,6 +7,7 @@ const CompanySchema = new Schema({
   website: String,
   recruiter: String,
   jobs: Array,
+  about: String,
 });
 
 // create model class
