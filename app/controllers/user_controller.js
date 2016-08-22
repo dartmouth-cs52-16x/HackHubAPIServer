@@ -7,6 +7,7 @@ const cleanID = (input) => {
   return { id: input._id,
     role: input.role,
     fullname: input.fullname,
+    email: input.email,
     image: input.image,
     facebook: input.facebook,
     linkedin: input.linkedin,
