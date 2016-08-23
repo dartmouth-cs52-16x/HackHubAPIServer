@@ -1,15 +1,15 @@
 import Help from '../models/help_model';
 
+// helpid is the actual id of the help message, the other is the user's id
+const cleanID = (input) => {
+  return { helpid: input._id, message: input.message, category: input.category, id: input.id };
+};
 
-// const cleanID = (input) => {
-//   return { id: input._id, text: input.text, date: input.date };
-// };
-//
-// const cleanIDs = (inputs) => {
-//   return inputs.map(input => {
-//     return cleanID(input);
-//   });
-// };
+const cleanIDs = (inputs) => {
+  return inputs.map(input => {
+    return cleanID(input);
+  });
+};
 
 export const createHelp = (req, res) => {
   const help = new Help();
@@ -31,7 +31,17 @@ export const createHelp = (req, res) => {
 export const getHelp = (req, res) => {
   Help.find().sort({ createdAt: -1 })
   .then(results => {
-    res.json(results);
+    res.json(cleanIDs(results));
+  })
+  .catch(error => {
+    res.json({ error });
+  });
+};
+
+export const deleteHelp = (req, res) => {
+  Help.findById(req.params.id).remove()
+  .then(result => {
+    res.json({ message: 'delete success' });
   })
   .catch(error => {
     res.json({ error });

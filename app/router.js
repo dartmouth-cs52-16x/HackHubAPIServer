@@ -44,4 +44,7 @@ router.route('/help')
   .post(Help.createHelp)
   .get(Help.getHelp);
 
+router.route('/help/:id')
+  .delete(Help.deleteHelp);
+
 export default router;
