@@ -7,6 +7,7 @@ const cleanID = (input) => {
   return { id: input._id,
     role: input.role,
     fullname: input.fullname,
+    email: input.email,
     image: input.image,
     facebook: input.facebook,
     linkedin: input.linkedin,
@@ -30,7 +31,7 @@ function tokenForUser(user) {
 
 
 export const signin = (req, res, next) => {
-  res.send({ token: tokenForUser(req.user), user: req.user._id, role: req.user.role });
+  res.send({ token: tokenForUser(req.user), user: req.user });
 };
 
 export const signup = (req, res, next) => {
@@ -58,7 +59,7 @@ export const signup = (req, res, next) => {
           User.save()
           .then(
             // return a token
-            res.send({ token: tokenForUser(User), user: User._id, role: User.role })
+            res.send({ token: tokenForUser(User), user: User })
           );
         }
       });
