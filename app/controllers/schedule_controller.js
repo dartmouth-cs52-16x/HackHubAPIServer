@@ -27,10 +27,8 @@ const cleanID = (input) => {
   };
 };
 
-const cleanIDs = (inputs) => {
-  return inputs.map(input => {
-    return cleanID(input);
-  });
+const cleanIDs = (input) => {
+  return cleanID(input);
 };
 
 export const createSched = (req, res) => {
