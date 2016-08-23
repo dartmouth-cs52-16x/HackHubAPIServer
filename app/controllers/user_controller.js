@@ -6,6 +6,7 @@ import UserModel from '../models/user_model';
 const cleanID = (input) => {
   return { id: input._id,
     role: input.role,
+    company: input.company,
     fullname: input.fullname,
     email: input.email,
     image: input.image,
