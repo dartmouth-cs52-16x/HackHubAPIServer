@@ -1,6 +1,6 @@
 import Schedule from '../models/schedule_model';
 
-
+// cleans
 const cleanID = (input) => {
   return {
     id: input._id,
