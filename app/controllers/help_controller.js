@@ -16,7 +16,6 @@ export const createHelp = (req, res) => {
   console.log('trying to create help');
   help.message = req.body.message;
   help.category = req.body.category;
-  help.email = req.body.email;
   help.id = req.body.id;
   help.save()
   .then(result => {
