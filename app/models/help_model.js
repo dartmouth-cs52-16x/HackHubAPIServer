@@ -4,7 +4,6 @@ import mongoose, { Schema } from 'mongoose';
 const HelpSchema = new Schema({
   message: String,
   category: String,
-  email: String,
   id: String,
 });
 
