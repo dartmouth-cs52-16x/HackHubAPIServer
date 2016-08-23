@@ -45,6 +45,9 @@ router.route('/help')
   .post(Help.createHelp)
   .get(Help.getHelp);
 
+router.route('/help/:id')
+  .delete(Help.deleteHelp);
+
 router.route('/schedule/:id')
       .put(Schedule.updateSched);
 
