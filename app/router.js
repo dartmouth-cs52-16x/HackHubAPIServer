@@ -3,6 +3,7 @@ import * as Announcement from './controllers/announcement_controller';
 import * as Company from './controllers/company_controller';
 import * as Users from './controllers/user_controller';
 import * as Help from './controllers/help_controller';
+import * as Schedule from './controllers/schedule_controller';
 import { requireSignin } from './services/passport';
 
 const router = Router();
@@ -46,5 +47,12 @@ router.route('/help')
 
 router.route('/help/:id')
   .delete(Help.deleteHelp);
+
+router.route('/schedule/:id')
+      .put(Schedule.updateSched);
+
+router.route('/schedule')
+      .post(Schedule.createSched)
+      .get(Schedule.getSchedule);
 
 export default router;
