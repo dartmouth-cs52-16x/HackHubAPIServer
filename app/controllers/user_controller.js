@@ -6,6 +6,7 @@ import UserModel from '../models/user_model';
 const cleanID = (input) => {
   return { id: input._id,
     role: input.role,
+    company: input.company,
     fullname: input.fullname,
     email: input.email,
     image: input.image,
@@ -39,6 +40,7 @@ export const signup = (req, res, next) => {
   const name = req.body.fullname;
   const password = req.body.password;
   const role = req.body.role;
+  const company = req.body.company;
 
   if (!email || !password) {
     return res.status(422).send('You must provide email and password');
@@ -54,6 +56,7 @@ export const signup = (req, res, next) => {
           User.email = email;
           User.password = password;
           User.role = role;
+          User.company = company;
           User.save()
           .then(
             // return a token
