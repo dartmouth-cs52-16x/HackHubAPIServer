@@ -10,7 +10,14 @@ const ScheduleSchema = new Schema({
       start: Number,
       end: Number,
     },
-    events: Array,
+    events: [{
+      time_range: String,
+      name: String,
+      location: String,
+      color: String,
+      start: Number,
+      end: Number,
+    }],
   },
   day2: {
     day_of_week: String,
@@ -20,7 +27,14 @@ const ScheduleSchema = new Schema({
       start: Number,
       end: Number,
     },
-    events: Array,
+    events: [{
+      time_range: String,
+      name: String,
+      location: String,
+      color: String,
+      start: Number,
+      end: Number,
+    }],
   },
 });
 
