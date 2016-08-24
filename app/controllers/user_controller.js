@@ -1,6 +1,28 @@
-import User from '../models/user_model';
 import jwt from 'jwt-simple';
 import config from '../config';
+import UserModel from '../models/user_model';
+
+
+const cleanID = (input) => {
+  return { id: input._id,
+    role: input.role,
+    company: input.company,
+    fullname: input.fullname,
+    email: input.email,
+    image: input.image,
+    facebook: input.facebook,
+    linkedin: input.linkedin,
+    website: input.website,
+    phone: input.phone,
+    about: input.about,
+    skills: input.skills };
+};
+
+const cleanIDs = (inputs) => {
+  return inputs.map(input => {
+    return cleanID(input);
+  });
+};
 
 // encodes a new token for a user object
 function tokenForUser(user) {
@@ -8,64 +30,90 @@ function tokenForUser(user) {
   return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
 }
 
+
 export const signin = (req, res, next) => {
-  User.findOne({ _id: req.user._id })
-  .then(result => {
-    res.send({ token: tokenForUser(req.user), id: req.user._id });
-  })
-  .catch(error => {
-    res.json({ message: 'Error in looking up user id' });
-  });
+  res.send({ token: tokenForUser(req.user), user: req.user });
 };
 
 export const signup = (req, res, next) => {
   const email = req.body.email;
+  const name = req.body.fullname;
   const password = req.body.password;
+  const role = req.body.role;
+  const company = req.body.company;
 
   if (!email || !password) {
     return res.status(422).send('You must provide email and password');
   }
 
-  // here you should do a mongo query to find if a user already exists with this email.
-  User.findOne({ email })
-  .then(result => {
-    if (result !== null) {
-      // if user exists then return an error.
-      return res.status(422).send('A user with this email already exists');
-    } else {
-      // if not, use the User model to create a new user.
-      const user = new User();
-      user.email = email;
-      user.password = password;
-
-      // Save the new User object
-      // this is similar to how you created a Post
-      user.save()
-      .then(
-        // return a token
-        res.json({ token: tokenForUser(user), id: user._id })
-      )
-      .catch(error => {
-        res.json({ message: 'Error in save' });
+  UserModel.findOne({ email })
+      .then((user) => {
+        if (user) {
+          return res.status(422).send('User already exists');
+        } else {
+          const User = new UserModel();
+          User.fullname = name;
+          User.email = email;
+          User.password = password;
+          User.role = role;
+          User.company = company;
+          User.save()
+          .then(
+            // return a token
+            res.send({ token: tokenForUser(User), user: User })
+          );
+        }
       });
-    }
-  })
-  .catch(error => {
-    res.json({ message: 'Error in findOne' });
-  });
 };
 
 export const getProfile = (req, res) => {
   console.log('getting here');
-  User.findById(req.params.id)
-  .then(result => {
+  UserModel.findById(req.params.id).then(result => {
     if (result !== null) {
-      res.json({ id: req.params.id });
+      console.log(result);
+      res.json({ user: cleanID(result) });
     } else {
       res.json({ message: 'Error in findOne' });
-    }
+    } }).catch(error => {
+      res.json({ message: 'Error in findOne' });
+    });
+};
+
+export const getUsers = (req, res) => {
+  UserModel.find()
+  .then(results => {
+    res.json(cleanIDs(results));
   })
   .catch(error => {
-    res.json({ message: 'Error in findOne' });
+    res.json({ error });
+  });
+};
+
+export const deleteUser = (req, res) => {
+  UserModel.findById(req.params.id).remove()
+  .then(result => {
+    res.json({ message: `User successfully deleted: id: ${req.params.id}` });
+  })
+  .catch(error => {
+    res.json({ error });
+  });
+};
+
+export const updateUser = (req, res) => {
+  UserModel.findById(req.body.id)
+  .then(result => {
+    const update = result;
+    update.image = req.body.image;
+    update.website = req.body.website;
+    update.facebook = req.body.facebook;
+    update.linkedin = req.body.linkedin;
+    update.about = req.body.about;
+    update.phone = req.body.phone;
+    update.skills = req.body.skills;
+    update.save();
+    res.json(cleanID(update));
+  })
+  .catch(error => {
+    res.json({ error });
   });
 };
