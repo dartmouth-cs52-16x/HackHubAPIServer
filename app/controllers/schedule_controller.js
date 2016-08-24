@@ -88,7 +88,7 @@ export const updateSched = (req, res) => {
     schedule.day2.day = req.body.day2.day;
     schedule.day2.range.start = req.body.day2.range.start;
     schedule.day2.range.end = req.body.day2.range.end;
-    schedule.day2.events = req.body.day1.events;
+    schedule.day2.events = req.body.day2.events;
 
     schedule.save();
     res.json(cleanID(schedule));
