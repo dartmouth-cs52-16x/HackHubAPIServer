@@ -76,18 +76,18 @@ export const updateSched = (req, res) => {
   Schedule.findById(req.params.id)
   .then(result => {
     const schedule = result;
-    schedule.day1.day_of_week = req.body.day1.day_of_week;
-    schedule.day1.month = req.body.day1.month;
-    schedule.day1.day = req.body.day1.day;
-    schedule.day1.range.start = req.body.day1.range.start;
-    schedule.day1.range.end = req.body.day1.range.end;
+    if (req.body.day1.day_of_week !== '') { schedule.day1.day_of_week = req.body.day1.day_of_week; }
+    if (req.body.day1.month !== '') { schedule.day1.month = req.body.day1.month; }
+    if (req.body.day1.day !== '') { schedule.day1.day = req.body.day1.day; }
+    if (req.body.day1.range.start !== '') { schedule.day1.range.start = req.body.day1.range.start; }
+    if (req.body.day1.range.end !== '') { schedule.day1.range.end = req.body.day1.range.end; }
     schedule.day1.events = req.body.day1.events;
 
-    schedule.day2.day_of_week = req.body.day2.day_of_week;
-    schedule.day2.month = req.body.day2.month;
-    schedule.day2.day = req.body.day2.day;
-    schedule.day2.range.start = req.body.day2.range.start;
-    schedule.day2.range.end = req.body.day2.range.end;
+    if (req.body.day2.day_of_week !== '') { schedule.day2.day_of_week = req.body.day2.day_of_week; }
+    if (req.body.day2.month !== '') { schedule.day2.month = req.body.day2.month; }
+    if (req.body.day2.day !== '') { schedule.day2.day = req.body.day2.day; }
+    if (req.body.day2.range.start !== '') { schedule.day2.range.start = req.body.day2.range.start; }
+    if (req.body.day2.range.end !== '') { schedule.day2.range.end = req.body.day2.range.end; }
     schedule.day2.events = req.body.day2.events;
 
     schedule.save();
