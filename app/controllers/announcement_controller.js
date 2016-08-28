@@ -31,13 +31,31 @@ export const createAnn = (req, res) => {
 
 export const getAnns = (req, res) => {
   console.log(req.user.role);
-  Announcement.find().sort({ createdAt: -1 })
-  .then(results => {
-    res.json(cleanIDs(results));
-  })
-  .catch(error => {
-    res.json({ error });
-  });
+  if (req.user.role === 'hacker') {
+    Announcement.find({ hacker: true }).sort({ createdAt: -1 })
+    .then(results => {
+      res.json(cleanIDs(results));
+    })
+    .catch(error => {
+      res.json({ error });
+    });
+  } else if (req.user.role === 'recruiter') {
+    Announcement.find({ recruiter: true }).sort({ createdAt: -1 })
+    .then(results => {
+      res.json(cleanIDs(results));
+    })
+    .catch(error => {
+      res.json({ error });
+    });
+  } else {
+    Announcement.find({}).sort({ createdAt: -1 })
+    .then(results => {
+      res.json(cleanIDs(results));
+    })
+    .catch(error => {
+      res.json({ error });
+    });
+  }
 };
 
 export const deleteAnn = (req, res) => {
