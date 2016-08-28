@@ -115,7 +115,6 @@ export const updateUser = (req, res) => {
     update.save();
     res.json(cleanID(update));
     if (oldPhone !== update.phone) {
-      console.log(update.phone);
       client.sendSms({
         to: update.phone,
         from: '5084337056',
