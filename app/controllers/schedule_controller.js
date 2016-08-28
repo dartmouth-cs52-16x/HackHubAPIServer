@@ -34,6 +34,9 @@ const cleanIDs = (inputs) => {
 };
 
 export const createSched = (req, res) => {
+  if (req.user.role !== 'organizer') {
+    return res.status(401).send('You are not authorized for this action');
+  }
   Schedule.collection.remove();
   console.log(Schedule);
   const schedule = new Schedule();
@@ -73,6 +76,9 @@ export const getSchedule = (req, res) => {
 
 
 export const updateSched = (req, res) => {
+  if (req.user.role !== 'organizer') {
+    return res.status(401).send('You are not authorized for this action');
+  }
   Schedule.findById(req.params.id)
   .then(result => {
     const schedule = result;
