@@ -91,6 +91,10 @@ export const getUsers = (req, res) => {
 };
 
 export const deleteUser = (req, res) => {
+  if (req.user.role !== 'organizer') {
+    return res.status(401).send('You are not authorized for this action');
+  }
+
   UserModel.findById(req.params.id).remove()
   .then(result => {
     res.json({ message: `User successfully deleted: id: ${req.params.id}` });
@@ -101,6 +105,10 @@ export const deleteUser = (req, res) => {
 };
 
 export const updateUser = (req, res) => {
+  if (req.user.id !== req.body.id) {
+    return res.status(401).send('You are not authorized for this action');
+  }
+
   UserModel.findById(req.body.id)
   .then(result => {
     const update = result;
