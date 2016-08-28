@@ -12,6 +12,10 @@ const cleanIDs = (inputs) => {
 };
 
 export const createHelp = (req, res) => {
+  console.log(req.user.role);
+  if (req.user.role !== 'hacker' && req.user.role !== 'recruiter') {
+    return res.status(401).send('You are not authorized for this action');
+  }
   const help = new Help();
   console.log('trying to create help');
   help.message = req.body.message;
@@ -29,6 +33,9 @@ export const createHelp = (req, res) => {
 };
 
 export const getHelp = (req, res) => {
+  if (req.user.role !== 'organizer') {
+    return res.status(401).send('You are not authorized for this action');
+  }
   Help.find().sort({ createdAt: -1 })
   .then(results => {
     res.json(cleanIDs(results));
@@ -39,6 +46,9 @@ export const getHelp = (req, res) => {
 };
 
 export const deleteHelp = (req, res) => {
+  if (req.user.role !== 'organizer') {
+    return res.status(401).send('You are not authorized for this action');
+  }
   Help.findById(req.params.id).remove()
   .then(result => {
     res.json({ message: 'delete success' });

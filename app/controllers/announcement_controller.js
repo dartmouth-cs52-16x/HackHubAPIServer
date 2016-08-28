@@ -12,6 +12,9 @@ const cleanIDs = (inputs) => {
 };
 
 export const createAnn = (req, res) => {
+  if (req.user.role !== 'organizer') {
+    return res.status(401).send('You are not authorized for this action');
+  }
   const announcement = new Announcement();
   announcement.text = req.body.text;
   announcement.date = req.body.date;
