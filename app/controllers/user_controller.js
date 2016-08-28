@@ -115,10 +115,11 @@ export const updateUser = (req, res) => {
     update.save();
     res.json(cleanID(update));
     if (oldPhone !== update.phone) {
+      console.log(update.phone);
       client.sendSms({
         to: update.phone,
         from: '5084337056',
-        body: 'Hello! This number has been signed up to receive announcements from HackHub. To stop receiving texts, reply STOP. To resubscribe, reply START.',
+        body: 'Hello, this is HackHub! To stop receiving announcements, reply STOP. To resubscribe, reply START.',
       }, (error, message) => {
         if (!error) {
           console.log('Success! The SID for this SMS message is:');
