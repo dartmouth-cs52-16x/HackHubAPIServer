@@ -24,9 +24,8 @@ export const createAnn = (req, res) => {
   announcement.save()
   .then(result => {
     res.json({ message: 'Post created!' });
-    const phoneListno = req.body.phoneList;
-    const phoneList = ['5083140743', '5083140743'];
-    console.log(phoneListno);
+    const phoneList = req.body.phoneList;
+    // const phoneList = ['5083140743', '5083140743'];
     for (let i = 0; i < phoneList.length; i++) {
       const phonenum = phoneList[i];
       const mymessage = announcement.text;
