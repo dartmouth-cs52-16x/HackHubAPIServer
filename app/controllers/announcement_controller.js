@@ -1,5 +1,6 @@
 import Announcement from '../models/announcement_model';
 
+const client = require('twilio')('AC8c99b5a46595bddff7a994e986079da1', 'fdd9ceec592ea9aa42c35d79894f80bc');
 
 const cleanID = (input) => {
   return { id: input._id, text: input.text, date: input.date, hacker: input.hacker, recruiter: input.recruiter };
@@ -23,6 +24,25 @@ export const createAnn = (req, res) => {
   announcement.save()
   .then(result => {
     res.json({ message: 'Post created!' });
+    const testPhones = ['5083140743', '5083140743'];
+    for (let i = 0; i < testPhones.length; i++) {
+      const phonenum = testPhones[i];
+      const mymessage = announcement.text;
+      client.sendSms({
+        to: phonenum,
+        from: '5084337056',
+        body: mymessage,
+      }, (error, message) => {
+        if (!error) {
+          console.log('Success! The SID for this SMS message is:');
+          console.log(message.sid);
+          console.log('Message sent on:');
+          console.log(message.dateCreated);
+        } else {
+          console.log('Oops! There was an error.');
+        }
+      });
+    }
   })
   .catch(error => {
     res.json({ error });
