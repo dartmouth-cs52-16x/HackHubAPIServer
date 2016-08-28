@@ -27,6 +27,7 @@ export const createAnn = (req, res) => {
 };
 
 export const getAnns = (req, res) => {
+  console.log(req.user.role);
   Announcement.find().sort({ createdAt: -1 })
   .then(results => {
     res.json(cleanIDs(results));

@@ -4,7 +4,7 @@ import * as Company from './controllers/company_controller';
 import * as Users from './controllers/user_controller';
 import * as Help from './controllers/help_controller';
 import * as Schedule from './controllers/schedule_controller';
-import { requireSignin } from './services/passport';
+import { requireAuth, requireSignin } from './services/passport';
 
 const router = Router();
 
@@ -17,42 +17,42 @@ router.get('/', (req, res) => {
 
 // /your routes will go here
 router.route('/announcements')
-  .post(Announcement.createAnn)
-  .get(Announcement.getAnns)
-  .delete(Announcement.deleteAnn);
+  .post(requireAuth, Announcement.createAnn)
+  .get(requireAuth, Announcement.getAnns)
+  .delete(requireAuth, Announcement.deleteAnn);
 
 router.route('/announcements/:id')
-  .delete(Announcement.deleteAnn);
+  .delete(requireAuth, Announcement.deleteAnn);
 
 router.route('/company')
-  .post(Company.createComp)
+  .post(requireAuth, Company.createComp)
   .get(Company.getCompanies);
 
 router.route('/company/:id')
   .get(Company.getCompany)
-  .delete(Company.deleteComp)
-  .put(Company.updateComp);
+  .delete(requireAuth, Company.deleteComp)
+  .put(requireAuth, Company.updateComp);
 
 router.route('/users/:id')
       .get(Users.getProfile)
-      .delete(Users.deleteUser)
-      .put(Users.updateUser);
+      .delete(requireAuth, Users.deleteUser)
+      .put(requireAuth, Users.updateUser);
 
 router.route('/users')
   .get(Users.getUsers);
 
 router.route('/help')
-  .post(Help.createHelp)
-  .get(Help.getHelp);
+  .post(requireAuth, Help.createHelp)
+  .get(requireAuth, Help.getHelp);
 
 router.route('/help/:id')
-  .delete(Help.deleteHelp);
+  .delete(requireAuth, Help.deleteHelp);
 
 router.route('/schedule/:id')
-      .put(Schedule.updateSched);
+      .put(requireAuth, Schedule.updateSched);
 
 router.route('/schedule')
-      .post(Schedule.createSched)
+      .post(requireAuth, Schedule.createSched)
       .get(Schedule.getSchedule);
 
 export default router;
