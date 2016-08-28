@@ -2,7 +2,7 @@ import Announcement from '../models/announcement_model';
 
 
 const cleanID = (input) => {
-  return { id: input._id, text: input.text, date: input.date };
+  return { id: input._id, text: input.text, date: input.date, hacker: input.hacker, recruiter: input.recruiter };
 };
 
 const cleanIDs = (inputs) => {
@@ -15,6 +15,8 @@ export const createAnn = (req, res) => {
   const announcement = new Announcement();
   announcement.text = req.body.text;
   announcement.date = req.body.date;
+  announcement.hacker = req.body.hacker;
+  announcement.recruiter = req.body.recruiter;
   announcement.save()
   .then(result => {
     res.json({ message: 'Post created!' });
