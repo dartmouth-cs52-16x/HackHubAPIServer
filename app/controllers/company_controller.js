@@ -13,8 +13,10 @@ const cleanIDs = (inputs) => {
 };
 
 export const createComp = (req, res) => {
-  console.log('comp');
-  console.log(req.user._id);
+  if (req.user.role !== 'organizer') {
+    return res.status(401).send('You are not authorized for this action');
+  }
+
   const company = new Company();
   company.name = req.body.name;
   company.image = req.body.image;
@@ -52,6 +54,10 @@ export const getCompany = (req, res) => {
 };
 
 export const deleteComp = (req, res) => {
+  if (req.user.role !== 'organizer') {
+    return res.status(401).send('You are not authorized for this action');
+  }
+
   res.json({ message: `Company successfully deleted: id: ${req.params.id}` });
   Company.findById(req.params.id).remove()
   .then(result => {
@@ -63,6 +69,9 @@ export const deleteComp = (req, res) => {
 };
 
 export const updateComp = (req, res) => {
+  if (req.user.role !== 'organizer' || req.user.company !== req.body.name) {
+    return res.status(401).send('You are not authorized for this action');
+  }
   Company.findById(req.params.id)
   .then(result => {
     const updatedComp = result;
