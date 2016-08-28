@@ -2,6 +2,7 @@ import jwt from 'jwt-simple';
 import config from '../config';
 import UserModel from '../models/user_model';
 
+const client = require('twilio')('AC8c99b5a46595bddff7a994e986079da1', 'fdd9ceec592ea9aa42c35d79894f80bc');
 
 const cleanID = (input) => {
   return { id: input._id,
@@ -103,6 +104,7 @@ export const updateUser = (req, res) => {
   UserModel.findById(req.body.id)
   .then(result => {
     const update = result;
+    const oldPhone = result.phone;
     update.image = req.body.image;
     update.website = req.body.website;
     update.facebook = req.body.facebook;
@@ -112,6 +114,22 @@ export const updateUser = (req, res) => {
     update.skills = req.body.skills;
     update.save();
     res.json(cleanID(update));
+    if (oldPhone !== update.phone) {
+      client.sendSms({
+        to: update.phone,
+        from: '5084337056',
+        body: 'Hello! This number has been signed up to receive announcements from HackHub. To stop receiving texts, reply STOP. To resubscribe, reply START.',
+      }, (error, message) => {
+        if (!error) {
+          console.log('Success! The SID for this SMS message is:');
+          console.log(message.sid);
+          console.log('Message sent on:');
+          console.log(message.dateCreated);
+        } else {
+          console.log('Oops! There was an error.');
+        }
+      });
+    }
   })
   .catch(error => {
     res.json({ error });
