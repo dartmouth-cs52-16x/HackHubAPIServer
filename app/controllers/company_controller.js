@@ -13,6 +13,8 @@ const cleanIDs = (inputs) => {
 };
 
 export const createComp = (req, res) => {
+  console.log('comp');
+  console.log(req.user._id);
   const company = new Company();
   company.name = req.body.name;
   company.image = req.body.image;
