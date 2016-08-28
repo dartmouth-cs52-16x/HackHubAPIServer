@@ -24,9 +24,10 @@ export const createAnn = (req, res) => {
   announcement.save()
   .then(result => {
     res.json({ message: 'Post created!' });
-    const testPhones = ['5083140743', '5083140743'];
-    for (let i = 0; i < testPhones.length; i++) {
-      const phonenum = testPhones[i];
+    const phoneList = req.body.phoneList;
+    // const phoneList = ['5083140743', '5083140743'];
+    for (let i = 0; i < phoneList.length; i++) {
+      const phonenum = phoneList[i];
       const mymessage = announcement.text;
       client.sendSms({
         to: phonenum,
