@@ -42,6 +42,7 @@ export const signup = (req, res, next) => {
   const password = req.body.password;
   const role = req.body.role;
   const company = req.body.company;
+  const image = req.body.image;
 
   if (!email || !password) {
     return res.status(422).send('You must provide email and password');
@@ -58,6 +59,7 @@ export const signup = (req, res, next) => {
           User.password = password;
           User.role = role;
           User.company = company;
+          User.image = image;
           User.save()
           .then(
             // return a token
