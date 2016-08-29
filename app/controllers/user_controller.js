@@ -83,7 +83,7 @@ export const getProfile = (req, res) => {
 };
 
 export const getUsers = (req, res) => {
-  UserModel.find()
+  UserModel.find().sort({ fullname: 1 })
   .then(results => {
     res.json(cleanIDs(results));
   })
