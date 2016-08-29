@@ -1,9 +1,12 @@
+// controller for user
+
 import jwt from 'jwt-simple';
 import config from '../config';
 import UserModel from '../models/user_model';
 
 const client = require('twilio')('AC8c99b5a46595bddff7a994e986079da1', 'fdd9ceec592ea9aa42c35d79894f80bc');
 
+// change _id to id
 const cleanID = (input) => {
   return { id: input._id,
     role: input.role,
@@ -19,6 +22,7 @@ const cleanID = (input) => {
     skills: input.skills };
 };
 
+// clean multiple inputs
 const cleanIDs = (inputs) => {
   return inputs.map(input => {
     return cleanID(input);
@@ -31,11 +35,12 @@ function tokenForUser(user) {
   return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
 }
 
-
+// sign in user
 export const signin = (req, res, next) => {
   res.send({ token: tokenForUser(req.user), user: req.user });
 };
 
+// sign up user
 export const signup = (req, res, next) => {
   const email = req.body.email;
   const name = req.body.fullname;
@@ -69,11 +74,10 @@ export const signup = (req, res, next) => {
       });
 };
 
+// get a specific user profile
 export const getProfile = (req, res) => {
-  console.log('getting here');
   UserModel.findById(req.params.id).then(result => {
     if (result !== null) {
-      console.log(result);
       res.json({ user: cleanID(result) });
     } else {
       res.json({ message: 'Error in findOne' });
@@ -82,6 +86,7 @@ export const getProfile = (req, res) => {
     });
 };
 
+// get all users
 export const getUsers = (req, res) => {
   UserModel.find().sort({ fullname: 1 })
   .then(results => {
@@ -92,6 +97,7 @@ export const getUsers = (req, res) => {
   });
 };
 
+// delete a user
 export const deleteUser = (req, res) => {
   if (req.user.role !== 'organizer') {
     return res.status(401).send('You are not authorized for this action');
@@ -106,6 +112,7 @@ export const deleteUser = (req, res) => {
   });
 };
 
+// update a user profile
 export const updateUser = (req, res) => {
   if (req.user.id !== req.body.id) {
     return res.status(401).send('You are not authorized for this action');
