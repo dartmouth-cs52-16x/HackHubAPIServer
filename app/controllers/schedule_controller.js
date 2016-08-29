@@ -1,3 +1,5 @@
+// controller for schedule
+
 import Schedule from '../models/schedule_model';
 
 

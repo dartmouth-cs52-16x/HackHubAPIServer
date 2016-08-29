@@ -1,3 +1,5 @@
+// controller for help messages
+
 import Help from '../models/help_model';
 
 // helpid is the actual id of the help message, the other is the user's id
@@ -5,12 +7,14 @@ const cleanID = (input) => {
   return { helpid: input._id, message: input.message, category: input.category, id: input.id };
 };
 
+// clean multiple ids
 const cleanIDs = (inputs) => {
   return inputs.map(input => {
     return cleanID(input);
   });
 };
 
+// create a new help message
 export const createHelp = (req, res) => {
   console.log(req.user.role);
   if (req.user.role !== 'hacker' && req.user.role !== 'recruiter') {
@@ -32,6 +36,7 @@ export const createHelp = (req, res) => {
   });
 };
 
+// get all help messages
 export const getHelp = (req, res) => {
   if (req.user.role !== 'organizer') {
     return res.status(401).send('You are not authorized for this action');
@@ -45,6 +50,7 @@ export const getHelp = (req, res) => {
   });
 };
 
+// delete a help message
 export const deleteHelp = (req, res) => {
   if (req.user.role !== 'organizer') {
     return res.status(401).send('You are not authorized for this action');

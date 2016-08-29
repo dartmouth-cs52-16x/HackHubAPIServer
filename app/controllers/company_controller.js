@@ -1,17 +1,21 @@
+// controller for company
+
 import Company from '../models/company_model';
 
-
+// change _id to id
 const cleanID = (input) => {
   return { id: input._id, name: input.name, image: input.image,
     website: input.website, recruiter: input.recruiter, jobs: input.jobs, about: input.about };
 };
 
+// clean multiple inputs
 const cleanIDs = (inputs) => {
   return inputs.map(input => {
     return cleanID(input);
   });
 };
 
+// cretae a company
 export const createComp = (req, res) => {
   if (req.user.role !== 'organizer') {
     return res.status(401).send('You are not authorized for this action');
@@ -33,6 +37,7 @@ export const createComp = (req, res) => {
   });
 };
 
+// get all companies
 export const getCompanies = (req, res) => {
   Company.find().sort({ name: 1 })
   .then(results => {
@@ -43,6 +48,7 @@ export const getCompanies = (req, res) => {
   });
 };
 
+// get a specific company by id
 export const getCompany = (req, res) => {
   Company.findById(req.params.id)
   .then(result => {
@@ -53,6 +59,7 @@ export const getCompany = (req, res) => {
   });
 };
 
+// delete a company
 export const deleteComp = (req, res) => {
   if (req.user.role !== 'organizer') {
     return res.status(401).send('You are not authorized for this action');
@@ -68,6 +75,7 @@ export const deleteComp = (req, res) => {
   });
 };
 
+// updtae a company
 export const updateComp = (req, res) => {
   if (req.user.role !== 'organizer' && req.user.company !== req.body.name) {
     return res.status(401).send('You are not authorized for this action');

@@ -1,3 +1,5 @@
+// model for help
+
 import mongoose, { Schema } from 'mongoose';
 
 // create a schema for posts with a field

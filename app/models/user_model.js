@@ -1,3 +1,5 @@
+// model for user
+
 import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcrypt-nodejs';
 
