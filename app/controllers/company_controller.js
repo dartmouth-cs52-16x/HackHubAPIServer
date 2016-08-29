@@ -69,7 +69,7 @@ export const deleteComp = (req, res) => {
 };
 
 export const updateComp = (req, res) => {
-  if (req.user.role !== 'organizer' || req.user.company !== req.body.name) {
+  if (req.user.role !== 'organizer' && req.user.company !== req.body.name) {
     return res.status(401).send('You are not authorized for this action');
   }
   Company.findById(req.params.id)

@@ -42,6 +42,7 @@ export const signup = (req, res, next) => {
   const password = req.body.password;
   const role = req.body.role;
   const company = req.body.company;
+  const image = req.body.image;
 
   if (!email || !password) {
     return res.status(422).send('You must provide email and password');
@@ -58,6 +59,7 @@ export const signup = (req, res, next) => {
           User.password = password;
           User.role = role;
           User.company = company;
+          User.image = image;
           User.save()
           .then(
             // return a token
@@ -91,6 +93,10 @@ export const getUsers = (req, res) => {
 };
 
 export const deleteUser = (req, res) => {
+  if (req.user.role !== 'organizer') {
+    return res.status(401).send('You are not authorized for this action');
+  }
+
   UserModel.findById(req.params.id).remove()
   .then(result => {
     res.json({ message: `User successfully deleted: id: ${req.params.id}` });
@@ -101,6 +107,10 @@ export const deleteUser = (req, res) => {
 };
 
 export const updateUser = (req, res) => {
+  if (req.user.id !== req.body.id) {
+    return res.status(401).send('You are not authorized for this action');
+  }
+
   UserModel.findById(req.body.id)
   .then(result => {
     const update = result;
