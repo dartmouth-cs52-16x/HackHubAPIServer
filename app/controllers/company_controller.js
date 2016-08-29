@@ -34,7 +34,7 @@ export const createComp = (req, res) => {
 };
 
 export const getCompanies = (req, res) => {
-  Company.find()
+  Company.find().sort({ name: 1 })
   .then(results => {
     res.json(cleanIDs(results));
   })
