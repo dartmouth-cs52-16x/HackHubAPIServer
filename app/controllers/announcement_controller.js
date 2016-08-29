@@ -25,7 +25,6 @@ export const createAnn = (req, res) => {
   .then(result => {
     res.json({ message: 'Post created!' });
     const phoneList = req.body.phoneList;
-    // const phoneList = ['5083140743', '5083140743'];
     for (let i = 0; i < phoneList.length; i++) {
       const phonenum = phoneList[i];
       const mymessage = announcement.text;
@@ -40,6 +39,7 @@ export const createAnn = (req, res) => {
           console.log('Message sent on:');
           console.log(message.dateCreated);
         } else {
+          console.log(error);
           console.log('Oops! There was an error.');
         }
       });
