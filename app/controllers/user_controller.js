@@ -76,10 +76,8 @@ export const signup = (req, res, next) => {
 
 // get a specific user profile
 export const getProfile = (req, res) => {
-  console.log('getting here');
   UserModel.findById(req.params.id).then(result => {
     if (result !== null) {
-      console.log(result);
       res.json({ user: cleanID(result) });
     } else {
       res.json({ message: 'Error in findOne' });

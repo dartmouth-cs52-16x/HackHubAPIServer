@@ -57,7 +57,6 @@ export const createAnn = (req, res) => {
 
 // get all announcements
 export const getAnns = (req, res) => {
-  console.log(req.user.role);
   if (req.user.role === 'hacker') {
     Announcement.find({ hacker: true }).sort({ createdAt: -1 })
     .then(results => {

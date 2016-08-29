@@ -40,7 +40,6 @@ export const createSched = (req, res) => {
     return res.status(401).send('You are not authorized for this action');
   }
   Schedule.collection.remove();
-  console.log(Schedule);
   const schedule = new Schedule();
   schedule.day1.day_of_week = req.body.day1.day_of_week;
   schedule.day1.month = req.body.day1.month;
@@ -68,7 +67,6 @@ export const createSched = (req, res) => {
 export const getSchedule = (req, res) => {
   Schedule.find()
   .then(results => {
-    console.log(results);
     res.json(cleanIDs(results));
   })
   .catch(error => {

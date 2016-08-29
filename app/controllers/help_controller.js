@@ -16,22 +16,18 @@ const cleanIDs = (inputs) => {
 
 // create a new help message
 export const createHelp = (req, res) => {
-  console.log(req.user.role);
   if (req.user.role !== 'hacker' && req.user.role !== 'recruiter') {
     return res.status(401).send('You are not authorized for this action');
   }
   const help = new Help();
-  console.log('trying to create help');
   help.message = req.body.message;
   help.category = req.body.category;
   help.id = req.body.id;
   help.save()
   .then(result => {
-    console.log('help created');
     res.json({ message: 'help created!' });
   })
   .catch(error => {
-    console.log('help not created');
     res.json({ error });
   });
 };
