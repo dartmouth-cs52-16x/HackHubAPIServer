@@ -118,7 +118,7 @@ export const updateUser = (req, res) => {
       client.sendSms({
         to: update.phone,
         from: '5084337056',
-        body: 'Hello, this is HackHub! To stop receiving announcements, reply STOP. To resubscribe, reply START.',
+        body: 'Hello this is HackHub! You will be notified of HackHub announcements by text! To stop receiving texts, reply STOP. To resubscribe, reply START.',
       }, (error, message) => {
         if (!error) {
           console.log('Success! The SID for this SMS message is:');
@@ -126,6 +126,7 @@ export const updateUser = (req, res) => {
           console.log('Message sent on:');
           console.log(message.dateCreated);
         } else {
+          console.log(error);
           console.log('Oops! There was an error.');
         }
       });
