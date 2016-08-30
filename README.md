@@ -1,4 +1,4 @@
-# HackHubAPIServer
+# HackHubFrontEnd
 ## A solution for the hectic Hackathon
 
 HackHub is a platform for organizing communication at a hackathon event. Hackers, recruiters, and organizers can all find HackHub useful. Hackers can keep track of the hackathon schedule, receive announcements (notified by text), view profiles of other hackers, and explore recruiters’ opportunities. Recruiters can promote their job opportunities and explore talent, and organizers can keep track of sponsors and run their event smoothly with control over all features of HackHub. HackHub’s dynamic nature in serving all of these users will streamline the hectic nature of a hackathon for all involved.
@@ -68,6 +68,8 @@ We have routing for the different pages organized in src/routes.js, and we use t
 
 For the back end, we decided to use an express and mongodb CRUD api server to connect to the front end. We use express routes and schema to implement the api for the front end components. To connect to mongo, we had to use a module called mongoose to treat data that we store in mongo as objects.
 
+We use Twilio to send text message announcements and Cloudinary to store pictures.
+
 ## Setup
 
 To set up the project development environment, you will need to fork or clone the two repositories needed for this project: HackHubFrontEnd and HackHubAPIServer.
@@ -102,6 +104,6 @@ Emma Oberstein, Erin Connolly, Jean Zhou, Robert Sayegh, Sophia Jiang
 
 ## Acknowledgments
 
-We use the Twilio for sending announcements by text message and Cloudinary for storing profile images.
+We use the Twilio for sending announcements by text message and Cloudinary for storing images.
 
 Thanks to Tim for helping us through this project!
