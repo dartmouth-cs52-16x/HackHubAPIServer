@@ -64,6 +64,8 @@ Actions and reducers are used to work with data from the server api for differen
 
 We have routing for the different pages organized in src/routes.js, and we use the axios library to give us a promise-based interface to make API requests. We also use the thunk library to allow our ActionCreators to return functions themselves instead of just actions with dispatch.
 
+For photo uploading when signing up or creating a company, we used three main tools: react-dropzone for accepting the image from the user, superagent to tranfer the image, and Cloudinary, a cloud-based service, to store the images.
+
 ### Back End
 
 For the back end, we decided to use an express and mongodb CRUD api server to connect to the front end. We use express routes and schema to implement the api for the front end components. To connect to mongo, we had to use a module called mongoose to treat data that we store in mongo as objects.
